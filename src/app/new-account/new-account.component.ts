@@ -5,16 +5,19 @@ import { AccountServices } from '../account.service';
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
   styleUrls: ['./new-account.component.css'],
-  providers: [LoggingServices, AccountServices],
 })
 export class NewAccountComponent {
   constructor(
     private logService: LoggingServices,
     private accountService: AccountServices
-  ) {}
+  ) {
+    accountService.statusUpdated.subscribe((status: string) =>
+      alert(`New status ` + status)
+    );
+  }
 
   onCreateAccount(accountName: string, accountStatus: string) {
     this.accountService.addAccount(accountName, accountStatus);
-    this.logService.logStatusChange(accountStatus);
+    // this.logService.logStatusChange(accountStatus);
   }
 }
